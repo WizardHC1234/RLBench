@@ -705,6 +705,17 @@ class Scene(object):
                     f'{camera_name}_camera_far': camera.get_far_clipping_plane(),
                 })
         misc.update({"variation_index": self._variation_index})
+
+        links_info = {}
+        # print(len(self._robot_shapes))
+        for robot_shape in self._robot_shapes[0]:
+            shape_name = robot_shape.get_name()
+             # min x, max x, min y, max y, min z, max z positions
+            links_info[f"{shape_name}_bbox"] = robot_shape.get_bounding_box()
+            links_info[f"{shape_name}_pose"] = robot_shape.get_pose()
+        misc.update(links_info)
+
+   
         if self.robot.is_bimanual and self._right_execute_demo_joint_position_action is not None:
             
             misc.update({"right_executed_demo_joint_position_action": self._right_execute_demo_joint_position_action,
